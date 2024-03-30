@@ -739,7 +739,7 @@
 		"compilationTarget": {
 			"contracts/reputationToken.sol": "Reputation"
 		},
-		"evmVersion": "london",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -832,11 +832,11 @@
 			]
 		},
 		"contracts/reputationToken.sol": {
-			"keccak256": "0x1f220c640d232a7b1d4a3f17093966e5363f96995555cd07d83b95532a910aee",
+			"keccak256": "0x50ce8b4f24672c499107110720a08979e5fa1f33ab9fdbb5ba9e7a68f2b053c0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://beab3a4206f7681a06eb6b1747cdc89bdca8284d84f549eae6911bfc759cb4fa",
-				"dweb:/ipfs/Qmdcu1v6TZ4rX6SV7Chmpuc1uy8JdztyRavmbZvUKsNWLi"
+				"bzz-raw://0421f5da74b3140cc6dbf31324ffc5dbac324bc255e7bb1863d5878fc3648bcd",
+				"dweb:/ipfs/QmNw98CMoVpgsSZPc2163714qfvSTjGY7XG2kwAJodqUZW"
 			]
 		}
 	},

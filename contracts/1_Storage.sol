@@ -16,6 +16,7 @@ contract Storage is Ownable {
     event NewProfile(uint40 id, string name);
     event NewEvent(uint id, string title);
     event PlayerJoined(uint40 playerId, uint eventId);
+    //event ListEvent(uint id, string title, uint40 capacity);
 
     struct Profile {
         uint40 id;
@@ -57,21 +58,31 @@ contract Storage is Ownable {
     }
 
     /**
-    Room Stuff. room is made, room is closed.
+    Room Stuff. room is made, room is closed, list all open rooms.
      */
 
-     function newEvent(string memory title, uint40 capacity) private{
+     function newEvent(string memory title, uint40 capacity) public {
+        require(isOwner(), "Only owner can make new events");
         uint id = uint(activeEvents.length+1);
         uint40[] memory profileIds = new uint40[](capacity);
         activeEvents.push(Event(id, title, ownerToProfile[msg.sender], capacity, profileIds));
         emit NewEvent(id, title);
     }
 
-    function joinEvent(uint index) private {
+    function joinEvent(uint index)  external{
+        require(!isOwner(), "Owner is already a participant of event");
         if(activeEvents.length != 0){
             activeEvents[index].profilesIds.push(ownerToProfile[msg.sender]);
             emit PlayerJoined(ownerToProfile[msg.sender], activeEvents[index].id);
         }
     }
+
+    /**
+    function to view all activeEvents in array
+
+    function showEvent(uint index) view public returns(uint, string memory, uint40){
+        return(activeEvents[index].id, activeEvents[index].title, activeEvents[index].capacity);
+        
+    }*/
 
 }
