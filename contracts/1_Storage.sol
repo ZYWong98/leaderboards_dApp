@@ -21,6 +21,7 @@ contract Storage is Ownable {
         string name;
         uint hostRep;
         uint participationRep;
+        bytes32 key;
     }
     mapping (address => uint40) public ownerToProfile;
 
@@ -33,16 +34,33 @@ contract Storage is Ownable {
     Profile[] private Profiles;
     Event[] private activeEvents;
 
-    function store(string memory name) private{
+    /**
+    Stores the user profile onto the the profiles array and tells everyone about it
+     */
+
+    function store(string memory name, string memory password) private{
         uint40 id = uint40(Profiles.length+1);
-        Profiles.push(Profile(id, name, 0, 0));
+        Profiles.push(Profile(id, name, 0, 0, keccak256(abi.encodePacked(password))));
         ownerToProfile[msg.sender] = id;
         emit NewProfile(id, name);
     }
 
-    function newEvent(string memory title) private{
+    /**
+    Login
+     */
+
+    function login(string storage password) private view returns (bool){
+        return Profiles[ownerToProfile[msg.sender]].key == keccak256(abi.encodePacked(password));
+    }
+
+    /**
+    Room Stuff. room is made, room is closed.
+     */
+
+     function newEvent(string memory title) private{
         uint id = uint(activeEvents.length+1);
         activeEvents.push(Event(id, title, ownerToProfile[msg.sender]));
         emit NewEvent(id, title);
     }
+    
 }
