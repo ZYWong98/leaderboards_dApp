@@ -76,6 +76,9 @@ contract Storage is Ownable {
             emit PlayerJoined(ownerToProfile[msg.sender], activeEvents[index].id);
         }
     }
+    function currentEvents() public external returns (Event[]){
+        return activeEvents;
+    }
 
     /**
     function to view all activeEvents in array
