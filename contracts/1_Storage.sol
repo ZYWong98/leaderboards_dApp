@@ -58,6 +58,14 @@ contract Storage is Ownable {
     }
 
     /**
+    Constructor to add 1 dummy profile & 1 dummy event
+     */
+    constructor(){
+        store('Dan','swordfish');
+        newEvent('Dota 2', 4);
+        }
+
+    /**
     Room Stuff. room is made, room is closed, list all open rooms.
      */
 
@@ -76,8 +84,17 @@ contract Storage is Ownable {
             emit PlayerJoined(ownerToProfile[msg.sender], activeEvents[index].id);
         }
     }
-    function currentEvents() public external returns (Event[]){
+
+    function currentEvents() view public returns (Event[] memory){
         return activeEvents;
+    }
+
+    /**
+    List all profiles. Owner only
+     */
+    function currentProfiles() view public returns (Profile[] memory) {
+        require(isOwner(),"Only owner can access");
+        return Profiles;
     }
 
     /**

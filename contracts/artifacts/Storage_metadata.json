@@ -6,6 +6,11 @@
 	"output": {
 		"abi": [
 			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
 				"anonymous": false,
 				"inputs": [
 					{
@@ -80,6 +85,86 @@
 				],
 				"name": "PlayerJoined",
 				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "currentEvents",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "title",
+								"type": "string"
+							},
+							{
+								"internalType": "uint40",
+								"name": "hostId",
+								"type": "uint40"
+							},
+							{
+								"internalType": "uint40",
+								"name": "capacity",
+								"type": "uint40"
+							},
+							{
+								"internalType": "uint40[]",
+								"name": "profilesIds",
+								"type": "uint40[]"
+							}
+						],
+						"internalType": "struct Storage.Event[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "currentProfiles",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint40",
+								"name": "id",
+								"type": "uint40"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "hostRep",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "participationRep",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "key",
+								"type": "bytes32"
+							}
+						],
+						"internalType": "struct Storage.Profile[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
 				"inputs": [],
@@ -209,6 +294,12 @@
 		"userdoc": {
 			"kind": "user",
 			"methods": {
+				"constructor": {
+					"notice": "Constructor to add 1 dummy profile & 1 dummy event"
+				},
+				"currentProfiles()": {
+					"notice": "List all profiles. Owner only"
+				},
 				"newEvent(string,uint40)": {
 					"notice": "Room Stuff. room is made, room is closed, list all open rooms."
 				},
@@ -236,11 +327,11 @@
 	},
 	"sources": {
 		"contracts/1_Storage.sol": {
-			"keccak256": "0x7ae7666eab549d45d2bd3c8640a11b91455ecc38973ee41752bd50f23766e9a6",
+			"keccak256": "0x2b7a886d9e2600fe70d16b2e7c67bd2f9a5a6c12a21c3ebb8bb1519701963bd4",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://f1a6ce77c4448078882d738f359c378303742a68e381f3497260bcaec458a6f9",
-				"dweb:/ipfs/QmbJDERScEsBssgSEVBKwkcJhZQ5HvHtiCZPief1m3JchF"
+				"bzz-raw://a72a8afd4d28f2e627691371d24ac44df9dab48f8a47d771bb735a1bc414f6c5",
+				"dweb:/ipfs/QmbMM5CQ2BzTXZJnFWPxH4LLMR9jverKcZM3SmmUuAr4RB"
 			]
 		},
 		"contracts/ownable.sol": {
