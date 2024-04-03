@@ -9,21 +9,30 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 
-contract Reputation is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
+contract Reputation is ERC20, ERC20Burnable, ERC20Pausable, Ownable{
     
     using SafeMath for uint256;
+    event factoryAddress(address);
+    /*
     
-
     //Mapping to store reputation data by token ID
     mapping (uint256=>Reputation) public reputationData;
 
     //Mapping to store address of token owner by token ID
     mapping (uint256=>address) public tokenIDToOwner;
+    
+    */
 
-    constructor(uint256 initialTokenSupply, address initialOwner)
+    /*
+    On deploying contract, set contract owner and initial token supply. Emit contract address
+    */
+
+    constructor(address initialOwner, uint256 initialTokenSupply)
         ERC20("Reputation", "REP")
         Ownable(initialOwner)
-    {_mint(initialOwner, initialTokenSupply);}
+        {_mint(initialOwner, initialTokenSupply);
+        emit factoryAddress(address(this));
+        }
 
     function pause() public onlyOwner {
         _pause();
@@ -31,10 +40,6 @@ contract Reputation is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
 
     function unpause() public onlyOwner {
         _unpause();
-    }
-
-    function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
     }
 
     function increaseAllowance(address spender, uint256 tokenValue) public onlyOwner{

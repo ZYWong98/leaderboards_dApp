@@ -8,14 +8,14 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "initialTokenSupply",
-						"type": "uint256"
-					},
-					{
 						"internalType": "address",
 						"name": "initialOwner",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "initialTokenSupply",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -235,6 +235,19 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "factoryAddress",
+				"type": "event"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -382,24 +395,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "mint",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "name",
 				"outputs": [
@@ -453,25 +448,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "reputationData",
-				"outputs": [
-					{
-						"internalType": "contract Reputation",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "symbol",
 				"outputs": [
@@ -479,25 +455,6 @@
 						"internalType": "string",
 						"name": "",
 						"type": "string"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "tokenIDToOwner",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -832,11 +789,11 @@
 			]
 		},
 		"contracts/reputationToken.sol": {
-			"keccak256": "0x50ce8b4f24672c499107110720a08979e5fa1f33ab9fdbb5ba9e7a68f2b053c0",
+			"keccak256": "0x98fa584d9064afdb33d5d894e335ed28dcb9247b815ddbaf7454c4b060da8ae2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0421f5da74b3140cc6dbf31324ffc5dbac324bc255e7bb1863d5878fc3648bcd",
-				"dweb:/ipfs/QmNw98CMoVpgsSZPc2163714qfvSTjGY7XG2kwAJodqUZW"
+				"bzz-raw://b87cb046dfc0455f7f20503819f5c5f443a110a0f4f620ae47278c5c65046876",
+				"dweb:/ipfs/QmV4owL99jarTeEXyqbokGveXfnLQKr52mUHxCRVacpmyG"
 			]
 		}
 	},
