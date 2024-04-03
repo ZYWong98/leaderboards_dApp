@@ -59,10 +59,3 @@ contract Reputation is ERC20, ERC20Burnable, ERC20Pausable, Ownable{
         super._update(from, to, value);
     }
 }
-
-/*
-for all addresses in room
-_mint(address, 1);
-
-
-*/

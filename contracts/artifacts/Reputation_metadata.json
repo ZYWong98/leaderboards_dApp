@@ -789,11 +789,11 @@
 			]
 		},
 		"contracts/reputationToken.sol": {
-			"keccak256": "0x98fa584d9064afdb33d5d894e335ed28dcb9247b815ddbaf7454c4b060da8ae2",
+			"keccak256": "0x43b898d9785ccd28e69a5a44aa57bbbd1c99c1cc7bee224ff4475a2e648ca37d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b87cb046dfc0455f7f20503819f5c5f443a110a0f4f620ae47278c5c65046876",
-				"dweb:/ipfs/QmV4owL99jarTeEXyqbokGveXfnLQKr52mUHxCRVacpmyG"
+				"bzz-raw://1f3fe7d0a653aa5066b90898b5b65ff2b9e3c6583d53182f1398385882528086",
+				"dweb:/ipfs/QmdPy7oT8baXy13LEaUjftk7PT6xaDexYAbez1KMxn63vU"
 			]
 		}
 	},
