@@ -23,7 +23,7 @@ contract Reputation is ERC20, ERC20Burnable, ERC20Pausable, Ownable{
     
     */
 
-    /*
+    /**
     On deploying contract, set contract owner and initial token supply. Emit contract address
     */
 

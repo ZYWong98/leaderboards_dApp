@@ -1,13 +1,31 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.8.2 <0.9.0;
 import "./ownable.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 
 /**
  * @title Storage
  * @dev Store & retrieve value in a variable
  * @custom:dev-run-script ./scripts/deploy_with_ethers.ts
  */
-contract Storage is Ownable {
+contract Storage is Ownable, ERC20, ERC20Burnable, ERC20Pausable{
+    
+    /**
+    Constructor to initialize contract, add 1 dummy profile & 1 dummy event
+     */
+    constructor()
+        ERC20("Reputation", "REP")
+        {
+        _mint(address(this), 100000000000000);
+        store('Profile not found','12345');
+        store('Dan','swordfish');
+        newEvent('Dota 2', 4);
+        //emit address(this));
+        }
+    
     /*
     id is self creating from how many people are in the app.
     its also only 40 because we have 8 billion people in world so it gets us everyone    
@@ -21,8 +39,8 @@ contract Storage is Ownable {
     struct Profile {
         uint40 id;
         string name;
-        uint hostRep;
-        uint participationRep;
+        //uint hostRep;
+        uint256 participationRep;
         bytes32 key;
     }
     mapping (address => uint40) public ownerToProfile;
@@ -44,9 +62,24 @@ contract Storage is Ownable {
 
     function store(string memory name, string memory password) private{
         uint40 id = uint40(Profiles.length+1);
-        Profiles.push(Profile(id, name, 0, 0, keccak256(abi.encodePacked(password))));
+        Profiles.push(Profile(id, name, 0, keccak256(abi.encodePacked(password))));
         ownerToProfile[msg.sender] = id;
         emit NewProfile(id, name);
+    }
+
+    /**
+    Gets the user profile for the UI
+     */
+    function getProfile(Event memory eventRoom) view public returns(Profile memory){
+        for(uint i=0;i<Profiles.length;i++){
+                if(Profiles[i].id==eventRoom.hostId)
+                {
+                    return Profiles[i];
+                }
+            
+            }
+        return Profiles[0];
+        
     }
 
     /**
@@ -58,12 +91,18 @@ contract Storage is Ownable {
     }
 
     /**
-    Constructor to add 1 dummy profile & 1 dummy event
+    Distribute tokens to each participant
      */
-    constructor(){
-        store('Dan','swordfish');
-        newEvent('Dota 2', 4);
-        }
+
+     function distributeToken(Profile memory user) public {
+        for(uint j=0;j<Profiles.length;j++){
+                if(Profiles[j].id==user.id)
+                {
+                    Profiles[user.id].participationRep++; 
+                }
+            }
+        
+    }
 
     /**
     Room Stuff. room is made, room is closed, list all open rooms.
@@ -85,6 +124,31 @@ contract Storage is Ownable {
         }
     }
 
+    function closeEvent(Event memory eventRoom) external {
+        require(isOwner(), "Only owner can close this event");
+        for(uint j=0;j<Profiles.length;j++){
+                if(Profiles[j].id==eventRoom.hostId)
+                {
+                    distributeToken(Profiles[j]);
+                }
+            }
+        for(uint i=0; i<eventRoom.profilesIds.length;i++){
+            for(uint j=0;j<Profiles.length;j++){
+                if(Profiles[j].id==eventRoom.profilesIds[i])
+                {
+                    distributeToken(Profiles[j]);
+                }
+            }
+        }
+        for(uint j=0;j<activeEvents.length;j++){
+                if(activeEvents[j].id==eventRoom.id)
+                {
+                    delete activeEvents[j];
+                }
+            }
+        
+    }
+
     function currentEvents() view public returns (Event[] memory){
         return activeEvents;
     }
@@ -97,12 +161,11 @@ contract Storage is Ownable {
         return Profiles;
     }
 
-    /**
-    function to view all activeEvents in array
-
-    function showEvent(uint index) view public returns(uint, string memory, uint40){
-        return(activeEvents[index].id, activeEvents[index].title, activeEvents[index].capacity);
-        
-    }*/
+    function _update(address from, address to, uint256 value)
+        internal
+        override(ERC20, ERC20Pausable)
+    {
+        super._update(from, to, value);
+    }
 
 }
