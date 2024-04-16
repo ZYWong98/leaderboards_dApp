@@ -362,34 +362,16 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "spender",
+						"name": "user",
 						"type": "address"
 					},
 					{
 						"internalType": "uint256",
-						"name": "tokenValue",
+						"name": "token",
 						"type": "uint256"
 					}
 				],
-				"name": "decreaseAllowance",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "spender",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "tokenValue",
-						"type": "uint256"
-					}
-				],
-				"name": "increaseAllowance",
+				"name": "distributeToken",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -793,11 +775,11 @@
 			]
 		},
 		"contracts/reputationToken.sol": {
-			"keccak256": "0xd89473072ad1e078264ec7b07346ae57a127ef84de5d53efc15a7f70642ccc9c",
+			"keccak256": "0xba79fcedb0dd36fbb84c105f3b9b142f9aef80d11a26f81b6246a09259dd69c8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2280d3b7f8f6e86965ff7529cc2c95f2f28fce59f95a51e2339036d71e129b1f",
-				"dweb:/ipfs/QmdvHTcAwvML5H2MWSvB3dg3zZUWUyod4RQBuYNHGaeicY"
+				"bzz-raw://ca2f5b225a70e4fc7b6f68be9ca59d823634232d723d11d9434ccb5f318ec0b4",
+				"dweb:/ipfs/QmRnu3FmhhvSHykDjw8KdwRBRmD5fjKCicNKaQtCXEeT1v"
 			]
 		}
 	},

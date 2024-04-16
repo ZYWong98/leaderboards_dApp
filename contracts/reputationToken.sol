@@ -42,12 +42,8 @@ contract Reputation is ERC20, ERC20Burnable, ERC20Pausable, Ownable{
         _unpause();
     }
 
-    function increaseAllowance(address spender, uint256 tokenValue) public onlyOwner{
-        increaseAllowance(spender, tokenValue);
-    }
-
-    function decreaseAllowance(address spender, uint256 tokenValue) public onlyOwner{
-        decreaseAllowance(spender, tokenValue);
+    function distributeToken(address user, uint token) public {
+        _transfer(address(this), user, token);
     }
 
     // The following functions are overrides required by Solidity.

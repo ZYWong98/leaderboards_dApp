@@ -11,18 +11,19 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
  * @dev Store & retrieve value in a variable
  * @custom:dev-run-script ./scripts/deploy_with_ethers.ts
  */
-contract Storage is Ownable, ERC20, ERC20Burnable, ERC20Pausable{
+contract Storage is Ownable{
     
     /**
     Constructor to initialize contract, add 1 dummy profile & 1 dummy event
      */
     constructor()
-        ERC20("Reputation", "REP")
+        //ERC20("Reputation", "REP")
         {
-        _mint(address(this), 100000000000000);
+        //_mint(address(this), 100000000000000);
         store('Profile not found','12345');
+        newEvent('Not an event', 0);
         store('Dan','swordfish');
-        newEvent('Dota 2', 4);
+        
         //emit address(this));
         }
     
@@ -60,7 +61,7 @@ contract Storage is Ownable, ERC20, ERC20Burnable, ERC20Pausable{
     Stores the user profile onto the the profiles array and tells everyone about it
      */
 
-    function store(string memory name, string memory password) private{
+    function store(string memory name, string memory password) public {
         uint40 id = uint40(Profiles.length+1);
         Profiles.push(Profile(id, name, 0, keccak256(abi.encodePacked(password))));
         ownerToProfile[msg.sender] = id;
@@ -70,11 +71,16 @@ contract Storage is Ownable, ERC20, ERC20Burnable, ERC20Pausable{
     /**
     Gets the user profile for the UI
      */
-    function getProfile(Event memory eventRoom) view public returns(Profile memory){
-        for(uint i=0;i<Profiles.length;i++){
-                if(Profiles[i].id==eventRoom.hostId)
+    function getProfile(uint eventRoomId) view public returns(Profile memory){
+        for(uint i=0;i<activeEvents.length;i++){
+                if(activeEvents[i].id==eventRoomId)
                 {
-                    return Profiles[i];
+                    for(uint j = 0; j< Profiles.length;j++){
+                        if(activeEvents[i].hostId == Profiles[j].id){
+                            return Profiles[j];
+                        }
+                    }
+                    
                 }
             
             }
@@ -86,19 +92,26 @@ contract Storage is Ownable, ERC20, ERC20Burnable, ERC20Pausable{
     Login
      */
 
-    function login(string storage password) private view returns (bool){
-        return Profiles[ownerToProfile[msg.sender]].key == keccak256(abi.encodePacked(password));
+    function login(uint40 id,string memory password) public returns (bool){
+        for(uint i = 0;i<Profiles.length;i++){
+        if(Profiles[i].id == id && Profiles[i].key == keccak256(abi.encodePacked(password))){
+            ownerToProfile[msg.sender] = Profiles[i].id;
+            return true;
+        }
+        }
+
+        return false;
     }
 
     /**
     Distribute tokens to each participant
      */
 
-     function distributeToken(Profile memory user) public {
+     function distributeToken(uint40 userId) public {
         for(uint j=0;j<Profiles.length;j++){
-                if(Profiles[j].id==user.id)
+                if(Profiles[j].id==userId)
                 {
-                    Profiles[user.id].participationRep++; 
+                    Profiles[j].participationRep++; 
                 }
             }
         
@@ -111,7 +124,7 @@ contract Storage is Ownable, ERC20, ERC20Burnable, ERC20Pausable{
      function newEvent(string memory title, uint40 capacity) public {
         require(isOwner(), "Only owner can make new events");
         uint id = uint(activeEvents.length+1);
-        uint40[] memory profileIds = new uint40[](capacity);
+        uint40[] memory profileIds = new uint40[](0);
         activeEvents.push(Event(id, title, ownerToProfile[msg.sender], capacity, profileIds));
         emit NewEvent(id, title);
     }
@@ -124,26 +137,34 @@ contract Storage is Ownable, ERC20, ERC20Burnable, ERC20Pausable{
         }
     }
 
-    function closeEvent(Event memory eventRoom) external {
+    function closeEvent(uint eventRoomId) external {
         require(isOwner(), "Only owner can close this event");
+        Event storage currentEvent = activeEvents[0];
+        for(uint k=0; k< activeEvents.length;k++){
+            if(activeEvents[k].id == eventRoomId){
+                currentEvent = activeEvents[k];
+            }
+        }
         for(uint j=0;j<Profiles.length;j++){
-                if(Profiles[j].id==eventRoom.hostId)
+                if(Profiles[j].id==eventRoomId)
                 {
-                    distributeToken(Profiles[j]);
+                    distributeToken(Profiles[j].id);
                 }
             }
-        for(uint i=0; i<eventRoom.profilesIds.length;i++){
+        for(uint i=0; i<currentEvent.profilesIds.length;i++){
             for(uint j=0;j<Profiles.length;j++){
-                if(Profiles[j].id==eventRoom.profilesIds[i])
+                if(Profiles[j].id==currentEvent.profilesIds[i])
                 {
-                    distributeToken(Profiles[j]);
+                    distributeToken(Profiles[j].id);
                 }
             }
         }
         for(uint j=0;j<activeEvents.length;j++){
-                if(activeEvents[j].id==eventRoom.id)
+                if(activeEvents[j].id==currentEvent.id)
                 {
                     delete activeEvents[j];
+                    
+
                 }
             }
         
@@ -157,9 +178,10 @@ contract Storage is Ownable, ERC20, ERC20Burnable, ERC20Pausable{
     List all profiles. Owner only
      */
     function currentProfiles() view public returns (Profile[] memory) {
-        require(isOwner(),"Only owner can access");
         return Profiles;
     }
+
+/**
 
     function _update(address from, address to, uint256 value)
         internal
@@ -167,5 +189,5 @@ contract Storage is Ownable, ERC20, ERC20Burnable, ERC20Pausable{
     {
         super._update(from, to, value);
     }
-
+*/
 }
