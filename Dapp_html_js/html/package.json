@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2",
+    "browserify": "^17.0.0",
+    "web3": "^4.8.0"
+  },
+  "devDependencies": {
+    "ethers": "^6.12.0"
+  }
+}

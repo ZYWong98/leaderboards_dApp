@@ -1,0 +1,436 @@
+{
+	"compiler": {
+		"version": "0.8.22+commit.4fc1097e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint40",
+						"name": "capacity",
+						"type": "uint40"
+					}
+				],
+				"name": "NewEvent",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "id",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					}
+				],
+				"name": "NewProfile",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "playerId",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "eventId",
+						"type": "uint256"
+					}
+				],
+				"name": "PlayerJoined",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "eventRoomId",
+						"type": "uint256"
+					}
+				],
+				"name": "closeEvent",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "currentEvents",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "title",
+								"type": "string"
+							},
+							{
+								"internalType": "address",
+								"name": "hostId",
+								"type": "address"
+							},
+							{
+								"internalType": "uint40",
+								"name": "capacity",
+								"type": "uint40"
+							},
+							{
+								"internalType": "address[]",
+								"name": "profilesIds",
+								"type": "address[]"
+							}
+						],
+						"internalType": "struct Storage.Event[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "currentProfiles",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "id",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "participationRep",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Storage.Profile[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "userId",
+						"type": "address"
+					}
+				],
+				"name": "distributeToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "eventRoomId",
+						"type": "uint256"
+					}
+				],
+				"name": "getProfile",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "id",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "participationRep",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Storage.Profile",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isOwner",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "index",
+						"type": "uint256"
+					}
+				],
+				"name": "joinEvent",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "login",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "uint40",
+						"name": "capacity",
+						"type": "uint40"
+					}
+				],
+				"name": "newEvent",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "ownerToProfile",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "store",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"custom:dev-run-script": "./scripts/deploy_with_ethers.ts",
+			"details": "Store & retrieve value in a variable",
+			"kind": "dev",
+			"methods": {
+				"isOwner()": {
+					"returns": {
+						"_0": "true if `msg.sender` is the owner of the contract."
+					}
+				},
+				"owner()": {
+					"returns": {
+						"_0": "the address of the owner."
+					}
+				},
+				"renounceOwnership()": {
+					"details": "Allows the current owner to relinquish control of the contract."
+				},
+				"transferOwnership(address)": {
+					"details": "Allows the current owner to transfer control of the contract to a newOwner.",
+					"params": {
+						"newOwner": "The address to transfer ownership to."
+					}
+				}
+			},
+			"title": "Storage",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"currentProfiles()": {
+					"notice": "List all profiles. Owner only"
+				},
+				"distributeToken(address)": {
+					"notice": "Distribute tokens to each participant"
+				},
+				"getProfile(uint256)": {
+					"notice": "Gets the user profile for the UI"
+				},
+				"login()": {
+					"notice": "Login"
+				},
+				"newEvent(string,uint40)": {
+					"notice": "Room Stuff. room is made, room is closed, list all open rooms."
+				},
+				"renounceOwnership()": {
+					"notice": "Renouncing to ownership will leave the contract without an owner. It will not be possible to call the functions with the `onlyOwner` modifier anymore."
+				},
+				"store()": {
+					"notice": "Stores the user profile onto the the profiles array and tells everyone about it"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Truffle_solidityfiles/proj_new/contracts/Storage.sol": "Storage"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Truffle_solidityfiles/proj_new/@openzeppelin/contracts/utils/math/SafeMath.sol": {
+			"keccak256": "0x097df0c755590d58a1ad7a6d8d291aa12c39db9abda1ec0ed768e7ac7a98267a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9e3786352a2c3a7139a70d5d0fe95dfa2a7b835a6a1cc9c5523546dd26ff841b",
+				"dweb:/ipfs/Qmco7KbpTnRVwgWpXKW7s1C7mbgG7mMH2ZsHGbCsSyFVy7"
+			]
+		},
+		"Truffle_solidityfiles/proj_new/contracts/Storage.sol": {
+			"keccak256": "0x5c0b9733c8e1d37947c919bd3079f1fe0e6edd9482c4eed626fa0d86f27c4c23",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://1904873511a7cd2d28aebc311728283fe5062fd777264101cef9b696364136ba",
+				"dweb:/ipfs/QmPV8RYfmyejfvPEZZGWR9aSzZ1e76PVEkLUwf8mMWh91L"
+			]
+		},
+		"Truffle_solidityfiles/proj_new/contracts/ownable.sol": {
+			"keccak256": "0x5c6f181298c742e7bbeb6e923816efece4d29d58f07f2e5fa395f35f0aed1037",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://22d370833901831fecf0c4eac7478f5c08146f5a65505de629b1aaffb76863f0",
+				"dweb:/ipfs/QmTM8orva3nPqQazytf1WjFpprN1rqm4DQXGdSPEyqnp7v"
+			]
+		}
+	},
+	"version": 1
+}

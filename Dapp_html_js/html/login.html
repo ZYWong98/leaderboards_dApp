@@ -1,0 +1,430 @@
+<html>
+  <head>
+    <style>
+      body {
+        background-image: url("login3.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100%;
+        background-size: cover;
+      }
+      #log {
+        margin: 25px;
+        height: 70%;
+        width: 25%;
+
+        background-image: url("loginbox1.jpg");
+        padding: 20px;
+        background-size: cover;
+      }
+      h1 {
+        color: black;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+    ></script>
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="web3.min.js"
+    ></script>
+    <script src="https://unpkg.com/@metamask/legacy-web3@latest/dist/metamask.web3.min.js"></script>
+  </head>
+
+  <body>
+    <nav class="navbar-light bg-light">
+      <!-- Navbar content -->
+      <h1>WELCOME</h1>
+    </nav>
+    <br />
+    <script>
+      async function connect() {
+        const web3 = window.web3;
+        if (typeof web3 !== "undefined") {
+          web3js = new Web3(web3.currentProvider);
+          const abi = [
+            {
+              inputs: [],
+              stateMutability: "nonpayable",
+              type: "constructor",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "string",
+                  name: "title",
+                  type: "string",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint40",
+                  name: "capacity",
+                  type: "uint40",
+                },
+              ],
+              name: "NewEvent",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "id",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "string",
+                  name: "name",
+                  type: "string",
+                },
+              ],
+              name: "NewProfile",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "previousOwner",
+                  type: "address",
+                },
+                {
+                  indexed: true,
+                  internalType: "address",
+                  name: "newOwner",
+                  type: "address",
+                },
+              ],
+              name: "OwnershipTransferred",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "address",
+                  name: "playerId",
+                  type: "address",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "eventId",
+                  type: "uint256",
+                },
+              ],
+              name: "PlayerJoined",
+              type: "event",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "eventRoomId",
+                  type: "uint256",
+                },
+              ],
+              name: "closeEvent",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "currentEvents",
+              outputs: [
+                {
+                  components: [
+                    {
+                      internalType: "uint256",
+                      name: "id",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "string",
+                      name: "title",
+                      type: "string",
+                    },
+                    {
+                      internalType: "address",
+                      name: "hostId",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint40",
+                      name: "capacity",
+                      type: "uint40",
+                    },
+                    {
+                      internalType: "address[]",
+                      name: "profilesIds",
+                      type: "address[]",
+                    },
+                  ],
+                  internalType: "struct Storage.Event[]",
+                  name: "",
+                  type: "tuple[]",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "currentProfiles",
+              outputs: [
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "id",
+                      type: "address",
+                    },
+                    {
+                      internalType: "string",
+                      name: "name",
+                      type: "string",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "participationRep",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct Storage.Profile[]",
+                  name: "",
+                  type: "tuple[]",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "userId",
+                  type: "address",
+                },
+              ],
+              name: "distributeToken",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "eventRoomId",
+                  type: "uint256",
+                },
+              ],
+              name: "getProfile",
+              outputs: [
+                {
+                  components: [
+                    {
+                      internalType: "address",
+                      name: "id",
+                      type: "address",
+                    },
+                    {
+                      internalType: "string",
+                      name: "name",
+                      type: "string",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "participationRep",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct Storage.Profile",
+                  name: "",
+                  type: "tuple",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "isOwner",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "index",
+                  type: "uint256",
+                },
+              ],
+              name: "joinEvent",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "login",
+              outputs: [
+                {
+                  internalType: "bool",
+                  name: "",
+                  type: "bool",
+                },
+              ],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "string",
+                  name: "title",
+                  type: "string",
+                },
+                {
+                  internalType: "uint40",
+                  name: "capacity",
+                  type: "uint40",
+                },
+              ],
+              name: "newEvent",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "owner",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              name: "ownerToProfile",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "renounceOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [],
+              name: "store",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "newOwner",
+                  type: "address",
+                },
+              ],
+              name: "transferOwnership",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+          ];
+          const contractAddress = "0xA0D7aD5Ea2C8a996f9D4ffa9f1a749323Cf58baD";
+
+          var myContract = new web3js.eth.Contract(abi, contractAddress);
+          const ethereum = window.ethereum;
+
+          const web3Instance = new Web3(ethereum);
+          const enableWeb3 = await ethereum.enable();
+          const account = await web3Instance.eth.getAccounts();
+
+          var accountAddress = await account[0];
+          alert(accountAddress);
+          let check = false;
+          check = await myContract.methods
+            .login()
+            .send({ from: accountAddress });
+          alert(check);
+          if (check) {
+            alert("logged in");
+            var array = await myContract.methods.currentProfiles().call();
+            alert(array);
+            window.location.assign("home.html");
+          } else {
+            myContract.methods.store().send({ from: accountAddress });
+            alert("welcome new user");
+            var array = await myContract.methods.currentProfiles().call();
+            alert(array);
+          }
+        } else {
+          alert("Please download Metamask");
+        }
+      }
+    </script>
+    <center>
+      <button type="submit" class="btn btn-primary" onclick="connect()">
+        Connect
+      </button>
+    </center>
+    <br />
+    <center>
+      <button type="submit" class="btn btn-primary" onclick="view()">
+        view accounts
+      </button>
+    </center>
+    <br />
+  </body>
+</html>

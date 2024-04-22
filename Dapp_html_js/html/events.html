@@ -1,0 +1,579 @@
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        background-image: url("login3.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100%;
+        background-size: cover;
+      }
+      #container {
+        margin: 25px;
+
+        background-color: rgb(52, 58, 63);
+        padding: 20px;
+        background-size: cover;
+        color: white;
+      }
+    </style>
+  </head>
+  <body onload="load()">
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+    ></script>
+    <script
+      language="javascript"
+      type="text/javascript"
+      src="web3.min.js"
+    ></script>
+
+    <script>
+      var i;
+      const abi = [
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "string",
+              name: "title",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint40",
+              name: "capacity",
+              type: "uint40",
+            },
+          ],
+          name: "NewEvent",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "id",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "NewProfile",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "previousOwner",
+              type: "address",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "OwnershipTransferred",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "playerId",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "eventId",
+              type: "uint256",
+            },
+          ],
+          name: "PlayerJoined",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "eventRoomId",
+              type: "uint256",
+            },
+          ],
+          name: "closeEvent",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "currentEvents",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "id",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "title",
+                  type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "hostId",
+                  type: "address",
+                },
+                {
+                  internalType: "uint40",
+                  name: "capacity",
+                  type: "uint40",
+                },
+                {
+                  internalType: "address[]",
+                  name: "profilesIds",
+                  type: "address[]",
+                },
+              ],
+              internalType: "struct Storage.Event[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "currentProfiles",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "id",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "name",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "participationRep",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Storage.Profile[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "userId",
+              type: "address",
+            },
+          ],
+          name: "distributeToken",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "eventRoomId",
+              type: "uint256",
+            },
+          ],
+          name: "getProfile",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "id",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "name",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "participationRep",
+                  type: "uint256",
+                },
+              ],
+              internalType: "struct Storage.Profile",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "isOwner",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "index",
+              type: "uint256",
+            },
+          ],
+          name: "joinEvent",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "login",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "title",
+              type: "string",
+            },
+            {
+              internalType: "uint40",
+              name: "capacity",
+              type: "uint40",
+            },
+          ],
+          name: "newEvent",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          name: "ownerToProfile",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "renounceOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "store",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "newOwner",
+              type: "address",
+            },
+          ],
+          name: "transferOwnership",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+      ];
+      const contractAddress = "0xA0D7aD5Ea2C8a996f9D4ffa9f1a749323Cf58baD";
+
+      async function load() {
+        const web3 = window.web3;
+        web3js = new Web3(web3.currentProvider);
+        var myContract = new web3js.eth.Contract(abi, contractAddress);
+
+        const ethereum = window.ethereum;
+        const web3Instance = new Web3(ethereum);
+        const enableWeb3 = await ethereum.enable();
+        const account = await web3Instance.eth.getAccounts();
+
+        var accountAddress = await account[0];
+        var events = await myContract.methods.currentEvents().call();
+        //console.log(events);
+        //var myEvents = await myContract.methods.returnMyEvents().call();
+        i = 0;
+        let tableadd = document.getElementById("MyTable");
+
+        var flag = false;
+        for (const element of events) {
+          let newRow = tableadd.insertRow(-1);
+          let cell1 = newRow.insertCell(0);
+          let cell2 = newRow.insertCell(1);
+          let cell3 = newRow.insertCell(2);
+          let cell4 = newRow.insertCell(3);
+          let cell5 = newRow.insertCell(4);
+
+          cell1.append(element[0]);
+          cell2.append(element[1]);
+          cell3.append(element[3]);
+          let joinButton = document.createElement("button");
+          joinButton.type = "submit";
+          joinButton.name = "Join";
+          joinButton.textContent = "Join Room";
+          joinButton.id = "joinButton";
+          joinButton.setAttribute(
+            "onclick",
+            "join($(this).closest('tr').index()-1)"
+          );
+          if (element[2] == accountAddress) {
+            joinButton.setAttribute("disabled", true);
+          }
+          //join(newRow.rowIndex)
+          cell4.appendChild(joinButton);
+
+          let closeButton = document.createElement("button");
+          closeButton.type = "submit";
+          closeButton.name = "Close";
+          closeButton.textContent = "Close Room";
+          closeButton.id = "closeButton";
+          closeButton.setAttribute(
+            "onclick",
+            "closeRoom($(this).closest('tr').index())"
+          );
+          if (element[2] != accountAddress) {
+            closeButton.setAttribute("disabled", true);
+          }
+          cell5.appendChild(closeButton);
+          // alert(value)
+          //closeButton.onclick = close($(this).closest('tr').index()+1);
+
+          //var arr = element[4];
+          //alert(element[2]);
+          //for (var j=0;j<arr.length;j++){
+          //alert("players",arr[j]);
+          //}
+          //alert($(this).parent().siblings().eq(0));
+        }
+      }
+
+      async function join(index) {
+        const web3 = window.web3;
+        web3js = new Web3(web3.currentProvider);
+        var myContract = new web3js.eth.Contract(abi, contractAddress);
+        const ethereum = window.ethereum;
+        const web3Instance = new Web3(ethereum);
+        const enableWeb3 = await ethereum.enable();
+        const account = await web3Instance.eth.getAccounts();
+
+        var accountAddress = await account[0];
+        //alert(accountAddress);
+        //var id = event.srcElement.id;
+        //alert(id);
+
+        myContract.methods.joinEvent(index).send({ from: accountAddress });
+        //alert("executed");
+        location.reload();
+      }
+
+      async function closeRoom(eventRoomId) {
+        const web3 = window.web3;
+        web3js = new Web3(web3.currentProvider);
+        var myContract = new web3js.eth.Contract(abi, contractAddress);
+        const ethereum = window.ethereum;
+        const web3Instance = new Web3(ethereum);
+        const enableWeb3 = await ethereum.enable();
+        const account = await web3Instance.eth.getAccounts();
+
+        var accountAddress = await account[0];
+
+        myContract.methods
+          .closeEvent(eventRoomId)
+          .send({ from: accountAddress });
+
+          location.reload();
+      }
+
+      async function createevent() {
+        const web3 = window.web3;
+        web3js = new Web3(web3.currentProvider);
+        var myContract = new web3js.eth.Contract(abi, contractAddress);
+        const ethereum = window.ethereum;
+        const web3Instance = new Web3(ethereum);
+        const enableWeb3 = await ethereum.enable();
+        const account = await web3Instance.eth.getAccounts();
+
+        var accountAddress = await account[0];
+
+        const title = document.getElementById("eventTitle");
+        const capacity = document.getElementById("eventCapacity");
+        var titleval = title.value;
+        var capacityval = capacity.value;
+        //alert(titleval);
+        //alert(capacityval);
+        await myContract.methods
+          .newEvent(titleval, capacityval)
+          .send({ from: accountAddress });
+        alert("success");
+        var array = await myContract.methods.currentProfiles().call();
+        location.reload();
+        //alert(array);
+      }
+    </script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Welcome Name!</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link" href="home.html">Home</a>
+            <a class="nav-link active" aria-current="page" href="events.html"
+              >Events</a
+            >
+
+            <a class="nav-link" href="#">Report</a>
+            <a class="nav-link" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <br /><br />
+    <table class="table table-dark" id="MyTable">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Event Name</th>
+          <!-- <th scope="col">Date</th> -->
+          <th scope="col">Size</th>
+          <!-- <th scope="col">Location</th> -->
+          <th scope="col">Join</th>
+          <th scope="col">Close</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div id="container">
+      <form>
+        <div class="form-row">
+          <div class="col">
+            <label for="exampleFormControlInput1">Event Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="eventTitle"
+              placeholder="name"
+            />
+          </div>
+          <div class="col">
+            <label for="exampleFormControlInput1">Size</label>
+            <input
+              type="number"
+              class="form-control"
+              id="eventCapacity"
+              placeholder="5"
+            />
+          </div>
+        </div>
+        <br />
+        <center>
+          <button type="button" class="btn btn-primary" onclick="createevent()">
+            Create Event
+          </button>
+        </center>
+      </form>
+    </div>
+  </body>
+</html>
